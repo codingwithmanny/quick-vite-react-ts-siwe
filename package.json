@@ -1,0 +1,20 @@
+{
+  "version": "0.0.0",
+  "name": "quick0vite-react-ts-siwe",
+  "author": "@codingwithmanny",
+  "repository": "https://github.com/codingwithmanny/quick-vite-react-ts-siwe",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "lerna run dev --stream --parallel",
+    "release": "standard-version"
+  },
+  "devDependencies": {
+    "lerna": "^4.0.0",
+    "standard-version": "^9.3.2"
+  },
+  "workspaces": [
+    "packages/react",
+    "packages/node"
+  ]
+}

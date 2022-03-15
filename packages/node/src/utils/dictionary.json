@@ -1,0 +1,8 @@
+{
+  "AUTH": {
+    "ERROR": {
+      "INVALID_NONCE": "Invalid nonce.",
+      "NOT_FOUND": "User not found."
+    }
+  }
+}
