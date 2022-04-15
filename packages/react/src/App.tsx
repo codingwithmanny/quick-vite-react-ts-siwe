@@ -270,7 +270,7 @@ const App = () => {
           </div> : null}
         </div> : null}
       </div>
-    </main >
+    </main>
   );
 };
 

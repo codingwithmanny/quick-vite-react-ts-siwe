@@ -8,8 +8,7 @@ import { providers } from 'ethers';
 import { Provider as WagmiProvider, chain, defaultChains, Connector } from 'wagmi';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
-// NOTE: this does not work on `yarn build` :'(
-// import { WalletLinkConnector } from 'wagmi/connectors/walletLink';
+import { WalletLinkConnector } from 'wagmi/connectors/walletLink';
 
 // Types
 // ========================================================
@@ -28,7 +27,7 @@ type ProviderConfig = { chainId?: number; connector?: Connector }
 /**
  * 
  */
-const alchemyId = import.meta.env.VITE_ALCHEMY_ID as string
+const alchemyApiKey = import.meta.env.VITE_ALCHEMY_API_KEY as string
 
 /**
  * 
@@ -84,13 +83,12 @@ const connectors = ({ chainId }: { chainId?: number; }) => {
         qrcode: true
       }
     }),
-    // NOTE: this does not work on `yarn build` :'(
-    // new WalletLinkConnector({
-    //   options: {
-    //     appName,
-    //     jsonRpcUrl: `${rpcUrl}/${infuraId}`
-    //   }
-    // })
+    new WalletLinkConnector({
+      options: {
+        appName,
+        jsonRpcUrl: `${rpcUrl}/${infuraId}`
+      }
+    })
   ]
 }
 
@@ -103,7 +101,7 @@ const provider = ({ chainId }: ProviderConfig) =>
   providers.getDefaultProvider(
     isChainSupported(chainId) ? chainId : defaultChain.id,
     {
-      alchemy: alchemyId,
+      alchemy: alchemyApiKey,
       etherscan: etherscanApiKey,
       infura: infuraId,
     },

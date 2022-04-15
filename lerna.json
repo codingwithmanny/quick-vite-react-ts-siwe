@@ -1,8 +1,5 @@
 {
-  "packages": [
-    "packages/react",
-    "packages/noce"
-  ],
+  "packages": ["packages/react", "packages/node"],
   "npmClient": "yarn",
   "version": "0.0.0",
   "useWorkspaces": true

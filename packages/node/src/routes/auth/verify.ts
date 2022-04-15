@@ -23,10 +23,12 @@ const Verify = async (req: Request, res: Response) => {
     const siweMessage = new SiweMessage(message);
     const fields = await siweMessage.validate(signature);
 
-    if (fields.nonce !== req.session.nonce)
+    if (fields.nonce !== req.session.nonce) {
+      req.session.destroy();
       return res
         .status(422)
         .json(buildErrorResponse(dictionary.AUTH.ERROR.INVALID_NONCE));
+    }
 
     req.session.siwe = fields;
     await req.session.save();
