@@ -1,17 +1,50 @@
-# Quick Vite React TypeScript Sign In With Ethereum
+# Quick Vite React TypeScript Sign-In With Ethereum
+
+A monorepo that implements Sign-In With Ethereum (SIWE) with an NodeJS TypeScript REST API and a client-side Single-Page Application in React with TypeScript.
+
+If you like this content, please make sure to follow me:
+
+- [http://twitter.com/codingwithmanny](http://twitter.com/codingwithmanny)
+- [https://codingwithmanny.medium.com](https://codingwithmanny.medium.com)
+
+---
+
+## TOC
+
+- [Requirements](#Requirements)
+- [Caveats](#Caveats)
+- [Sign Up Alchemy Account](#Sign-Up-Alchemy-Account)
+- [Sign Up Etherscan Account](#Sign-Up-Etherscan-Account)
+- [Sign Up Infura Account](#Sign-Up-Infura-Account)
+- [Local Setup](#Sign-Up-Infura-Account)
+- [Debugging](#Debugging)
+- [Deployment](#Deployment)
+- [License](#License)
+
+---
 
 ## Requirements
 
 - NVM or Node `v16.14.0`
 - Yarn
 
+---
+
+## Caveats
+
+Currently on `yarn build` for React, the WalletLink provider needs to update its types.
+
+[[bug] Example Vite React Type Errors](https://github.com/tmm/wagmi/issues/256)
+
+---
+
 ## Sign Up Alchemy Account
 
-## 1 - Website Sign Up
+### 1 - Website Sign Up
 
 Go to [https://www.alchemy.com](https://www.alchemy.com)
 
-## 2 - Create App
+### 2 - Create App
 
 A - When logged in, in the top right, click on **Create App**
 
@@ -28,11 +61,13 @@ In the Alchemy dashboard for your newly created project click **VIEW KEY** and o
 **File**: `.env`
 
 ```yaml
-VITE_ALCHEMY_ID="<YOUR_ALCHEMY_API_KEY>"
+VITE_ALCHEMY_API_KEY="<YOUR_ALCHEMY_API_KEY>"
 VITE_ETHERSCAN_API_KEY=""
 VITE_INFURA_ID=""
 VITE_APP_NAME="QUICK VITE REACT TYPESCRIPT SIWE"
 ```
+
+---
 
 ## Sign Up Etherscan Account
 
@@ -57,11 +92,13 @@ E - Copy **API Key Token**
 **File:** `packages/react/.env`
 
 ```yaml
-VITE_ALCHEMY_ID=""
+VITE_ALCHEMY_API_KEY=""
 VITE_ETHERSCAN_API_KEY="<YOUR_ETHERSCAN_API_KEY>"
 VITE_INFURA_ID=""
 VITE_APP_NAME="QUICK VITE REACT TYPESCRIPT SIWE"
 ```
+
+---
 
 ## Sign Up Infura Account
 
@@ -86,11 +123,13 @@ E - When the project is create copy the **Project ID**
 **File:** `packages/react/.env`
 
 ```yaml
-VITE_ALCHEMY_ID=""
+VITE_ALCHEMY_API_KEY=""
 VITE_ETHERSCAN_API_KEY=""
 INFURA_ID="<YOUR_INFURA_PROJECT_ID>"
 APP_NAME="QUICK VITE REACT TYPESCRIPT SIWE"
 ```
+
+---
 
 ## Local Setup
 
@@ -114,6 +153,8 @@ cp packages/react/.env.example packages/react/.env;
 yarn dev;
 ```
 
+---
+
 ## Debugging
 
 In case you need to kill a port:
@@ -123,6 +164,14 @@ kill -9 $(lsof -ti:5001); # node
 kill -9 $(lsof -ti:3000); # react
 ```
 
+---
+
 ## Deployment
 
 TBD
+
+---
+
+## License
+
+MIT
