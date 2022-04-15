@@ -12,7 +12,6 @@ If you like this content, please make sure to follow me:
 ## TOC
 
 - [Requirements](#Requirements)
-- [Caveats](#Caveats)
 - [Sign Up Alchemy Account](#Sign-Up-Alchemy-Account)
 - [Sign Up Etherscan Account](#Sign-Up-Etherscan-Account)
 - [Sign Up Infura Account](#Sign-Up-Infura-Account)
@@ -27,14 +26,6 @@ If you like this content, please make sure to follow me:
 
 - NVM or Node `v16.14.0`
 - Yarn
-
----
-
-## Caveats
-
-Currently on `yarn build` for React, the WalletLink provider needs to update its types.
-
-[[bug] Example Vite React Type Errors](https://github.com/tmm/wagmi/issues/256)
 
 ---
 
