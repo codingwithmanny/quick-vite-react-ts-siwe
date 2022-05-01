@@ -1,7 +1,7 @@
 // Imports
 // ========================================================
 import { useCallback, useState } from 'react';
-import { useConnect, useAccount, useNetwork, useSignMessage } from 'wagmi';
+import { useConnect, useAccount, useNetwork, useSignMessage, useDisconnect } from 'wagmi';
 import { SiweMessage } from 'siwe';
 
 // Styles
@@ -42,16 +42,6 @@ const getButtonStyles = (name?: string) => {
 // ========================================================
 const App = () => {
   // State / Props
-  const [
-    {
-      data: { connector, connectors },
-      error,
-      loading,
-    },
-    connect,
-  ] = useConnect();
-  const [{ data: accountData }, disconnect] = useAccount();
-  const [{ data: networkData }] = useNetwork();
   const [state, setState] = useState<{
     address?: string
     error?: Error
@@ -59,15 +49,25 @@ const App = () => {
   }>({});
   const [message, setMessage] = useState<SiweMessage>();
   const [signature, setSignature] = useState<string | undefined>();
-  const [me, setMe] = useState<unknown>()
-  const [, signMessage] = useSignMessage();
+  const [me, setMe] = useState<unknown>();
+  const {
+    isConnecting,
+    pendingConnector,
+    connectors,
+    error,
+    connect,
+  } = useConnect();
+  const { data: accountData } = useAccount();
+  const { disconnect } = useDisconnect();
+  const { activeChain } = useNetwork();
+  const { signMessageAsync } = useSignMessage();
 
   // Functions
-  const signIn = useCallback(async () => {
+  const signIn = async () => {
     try {
       // Validation
       const address = accountData?.address;
-      const chainId = networkData?.chain?.id;
+      const chainId = activeChain?.id;
       if (!address || !chainId) return;
 
       // Set loading
@@ -100,10 +100,9 @@ const App = () => {
       setMessage(message);
 
       // Prompt for signature
-      const signResult = await signMessage({ message: message.prepareMessage() });
-      if (signResult.error) throw signResult.error;
+      const signResult = await signMessageAsync({ message: message.prepareMessage() });
 
-      setSignature(signResult.data);
+      setSignature(signResult);
 
       // Verify signature
       await fetch(`${import.meta.env.VITE_API_URL}/auth/verify`, {
@@ -111,7 +110,7 @@ const App = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ message, signature: signResult.data }),
+        body: JSON.stringify({ message, signature: signResult }),
         credentials: 'include'
       });
 
@@ -127,7 +126,7 @@ const App = () => {
         isLoading: false
       });
     }
-  }, []);
+  };
 
   /**
    * 
@@ -257,7 +256,7 @@ const App = () => {
             >
               {option.name}
               {!option.ready && ' (unsupported)'}
-              {loading && option.name === connector?.name && <small className='ml-2'>(Awaiting Connetion...)</small>}
+              {isConnecting && pendingConnector?.id === option.id && <small className='ml-2'>(Awaiting Connetion...)</small>}
             </button>
           ))}
 

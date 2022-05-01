@@ -5,10 +5,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import { providers } from 'ethers';
-import { Provider as WagmiProvider, chain, defaultChains, Connector } from 'wagmi';
+import { Provider as WagmiProvider, createClient, chain, defaultChains, Connector } from 'wagmi';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
-import { WalletLinkConnector } from 'wagmi/connectors/walletLink';
+import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
 
 // Types
 // ========================================================
@@ -69,7 +69,7 @@ const isChainSupported = (chainId?: number) =>
  */
 const connectors = ({ chainId }: { chainId?: number; }) => {
   // RPC
-  const rpcUrl = chains.find((x) => x.id === chainId)?.rpcUrls?.[0] ?? chain.mainnet.rpcUrls[0];
+  const rpcUrls = chains.find((x) => x.id === chainId)?.rpcUrls ?? chain.mainnet.rpcUrls;
 
   // Return options
   return [
@@ -83,10 +83,10 @@ const connectors = ({ chainId }: { chainId?: number; }) => {
         qrcode: true
       }
     }),
-    new WalletLinkConnector({
+    new CoinbaseWalletConnector({
       options: {
         appName,
-        jsonRpcUrl: `${rpcUrl}/${infuraId}`
+        jsonRpcUrl: `${rpcUrls.alchemy}/${infuraId}`
       }
     })
   ]
@@ -117,15 +117,19 @@ const webSocketProvider = ({ chainId }: ConnectorsConfig) =>
     ? new providers.InfuraWebSocketProvider(chainId, infuraId)
     : undefined
 
+const client = createClient({
+  autoConnect: true,
+  connectors,
+  provider,
+  webSocketProvider
+})
+
 // Main Render
 // ========================================================
 ReactDOM.render(
   <React.StrictMode>
     <WagmiProvider
-      autoConnect
-      connectors={connectors}
-      provider={provider}
-      webSocketProvider={webSocketProvider}
+      client={client}
     >
       <App />
     </WagmiProvider>
