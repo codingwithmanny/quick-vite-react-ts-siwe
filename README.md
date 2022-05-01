@@ -9,6 +9,13 @@ If you like this content, please make sure to follow me:
 
 ---
 
+> ℹ️ **Running Wagmi 0.2.8?**
+>
+> Looking for previous support for `wagmi@0.2.8`?
+> Check out the [wagmi-0.2.8](/tree/wagmi-0.2.8) branch.
+
+---
+
 ## TOC
 
 - [Requirements](#Requirements)
