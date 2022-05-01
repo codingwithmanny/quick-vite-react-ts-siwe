@@ -183,7 +183,6 @@ const App = () => {
         method: 'get',
         credentials: 'include'
       });
-      const logOutJSON = await logOutResult.json();
 
       // Reset loading state
       setState({
