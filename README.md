@@ -12,7 +12,7 @@ If you like this content, please make sure to follow me:
 > ℹ️ **Running Wagmi 0.2.8?**
 >
 > Looking for previous support for `wagmi@0.2.8`?
-> Check out the [wagmi-0.2.8](/tree/wagmi-0.2.8) branch.
+> Check out the [wagmi-0.2.8](https://github.com/codingwithmanny/quick-vite-react-ts-siwe/tree/wagmi-0.2.8) branch.
 
 ---
 
